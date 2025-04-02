@@ -1,4 +1,4 @@
-defmodule MayorPila do
+defmodule NumeroMax do
   def obtener_mayor([unico]), do: unico
 
   def obtener_mayor(lista) do
@@ -10,4 +10,9 @@ defmodule MayorPila do
 
     max(max_izq, max_der)
   end
+  def main() do
+    lista= [7,6,8,4,5]
+    IO.puts(obtener_mayor(lista))
+  end
 end
+NumeroMax.main()
