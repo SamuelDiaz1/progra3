@@ -10,7 +10,7 @@ defmodule Cliente do
     |> Util.mostrar_mensaje()
 
     nombre =
-      "Ingresenombre:"
+      "Ingrese nombre:"
       |> Util.ingresar(:texto)
 
     edad =
@@ -40,8 +40,6 @@ defmodule Cliente do
       "\nIngresar más clientes (s/n): "
       |> Util.ingresar(:boolean)
 
-    
-
     case mas_clientes do
       true ->
         mensaje
@@ -51,10 +49,22 @@ defmodule Cliente do
         nueva_lista
     end
   end
-
   def generar_mensaje_clientes(lista_clientes, parser) do
     lista_clientes
     |> Enum.map(parser)
-    |> Enum.join()
+    |> Enum.join("\n")
   end
+  def escribir_csv(clientes, nombre) do
+    clientes
+    |> generar_mensaje_clientes(&convertir_cliente_linea_csv/1)
+    # adiciona los títulos
+    |> (&("nombre, edad, altura\n" <> &1)).()
+    |> (&File.write(nombre, &1)).()
+  end
+
+  defp convertir_cliente_linea_csv(cliente) do
+    "#{cliente.nombre},#{cliente.edad}, #{cliente.altura}"
+  end
+
+
 end
